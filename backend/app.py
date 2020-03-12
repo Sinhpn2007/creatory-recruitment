@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column
 from sqlalchemy import (
     Integer, String, DateTime, Text,
-    ForeignKey, text
+    ForeignKey, text, func, and_
 )
 import os
 
@@ -79,7 +79,7 @@ class Channel(db.Model):
 
 @app.route('/results', methods=['GET'])
 def results():
-    list_video = db.session.query(Video).join(VideoMeasurement).filter(VideoMeasurement.measurement_date >= (Video.create_date + timedelta(days=2))).all()
+    list_video = db.session.query(Video).join(VideoMeasurement).filter(VideoMeasurement.measurement_date >= Video.create_date + timedelta(days=2)).all()
     print(list_video)
 
     full_schema = VideoSchema(many=True)

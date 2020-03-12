@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import ListVideos from "./components/Videos/ListVideos";
+
 
 function App() {
-
     // We like to use axios for fetching from the backend
     // but feel free to use something else if you prefer that!
 
@@ -16,6 +17,7 @@ function App() {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
+        // setApiData([1, 2]);
         const fetchData = async () => {
             setIsLoading(true);
             setIsError(false);
@@ -23,7 +25,6 @@ function App() {
                 const result = await axios.get(
                     '/results'
                 );
-                debugger
                 setIsLoading(false);
                 setApiData(result.data);
             }
@@ -38,13 +39,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Results</h1>
-            <p>Please visualize latest video measurement grouped by video and channel below (as you see fit).</p>
-            <ul>
-                <li>Result 1</li>
-                <li>Result 2</li>
-                <li>...</li>
-            </ul>
+            <ListVideos apiData={apiData.list_video} test="123124"/>
         </div>
     );
 }
